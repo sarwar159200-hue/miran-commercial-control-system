@@ -1,0 +1,57 @@
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import SuperAdminDelete from "@/components/super-admin-delete";
+import { deleteDocumentRecord } from "../_actions/commercial";
+export const dynamic = "force-dynamic";
+
+function canPreview(name: string) {
+  return /\.(pdf|png|jpe?g|gif|webp|txt|csv)$/i.test(name || "");
+}
+
+export default async function Page({ searchParams }: { searchParams: Promise<{ uploaded?: string;deleted?:string;error?:string }> }) {
+  const q = await searchParams;
+  const s = await createClient();
+  if (!s) return null;
+  const { data: { user } } = await s.auth.getUser();
+  const { data: me } = user ? await s.from("profiles").select("is_super_admin").eq("id", user.id).maybeSingle() : { data: null as any };
+  const isSuperAdmin = Boolean(me?.is_super_admin || user?.email?.toLowerCase() === "sarwar.khalid@miranenergy.com");
+
+  const r = await s.from("documents")
+    .select("id,document_title,document_type,file_name,revision,purchase_order_id,invoice_id,vendor_id,google_drive_file_id,is_historical,uploaded_at,storage_provider,storage_status,file_size,is_deleted")
+    .eq("is_deleted", false)
+    .order("uploaded_at", { ascending: false });
+  const rows = r.data ?? [];
+  const poIds = [...new Set(rows.map((x:any)=>x.purchase_order_id).filter(Boolean))];
+  const invoiceIds = [...new Set(rows.map((x:any)=>x.invoice_id).filter(Boolean))];
+  const vendorIds = [...new Set(rows.map((x:any)=>x.vendor_id).filter(Boolean))];
+  const [por, ir, vr] = await Promise.all([
+    poIds.length ? s.from("purchase_orders").select("id,po_number").in("id", poIds) : Promise.resolve({data:[]} as any),
+    invoiceIds.length ? s.from("invoices").select("id,invoice_number").in("id", invoiceIds) : Promise.resolve({data:[]} as any),
+    vendorIds.length ? s.from("vendors").select("id,vendor_name").in("id", vendorIds) : Promise.resolve({data:[]} as any),
+  ]);
+  const poMap = new Map<string,string>((por.data??[]).map((x:any)=>[String(x.id),String(x.po_number??"—")]));
+  const invoiceMap = new Map<string,string>((ir.data??[]).map((x:any)=>[String(x.id),String(x.invoice_number??"—")]));
+  const vendorMap = new Map<string,string>((vr.data??[]).map((x:any)=>[String(x.id),String(x.vendor_name??"—")]));
+
+  return <div className="mx-auto max-w-[1600px]">
+    {q.deleted?<div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">Document record deleted from MCCS. The Google Drive file has been retained.</div>:null}
+    {q.error?<div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{q.error}</div>:null}
+    <div className="flex flex-wrap items-end justify-between gap-3">
+      <div><div className="text-xs font-extrabold uppercase tracking-[.2em] text-blue-700">MCCS</div><h1 className="mt-2 text-3xl font-bold">Documents</h1><p className="mt-2 text-sm text-slate-500">Secure commercial document register. Files are delivered through MCCS; users do not need separate Google Drive permission.</p></div>
+      <div className="flex gap-2"><Link href="/documents/new" className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold dark:border-slate-700 dark:bg-slate-900">Metadata Only</Link><Link href="/documents/upload" className="rounded-xl bg-[#07111f] px-4 py-3 text-sm font-bold text-white dark:bg-blue-600">Attach Document</Link></div>
+    </div>
+    {q.uploaded?<div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">File uploaded to Google Drive and registered successfully.</div>:null}
+    {r.error?<div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">{r.error.message}</div>:null}
+    <div className="mccs-card mt-7 overflow-hidden rounded-2xl"><div className="overflow-x-auto"><table className="w-full text-left text-sm">
+      <thead className="bg-slate-50 text-xs uppercase text-slate-500 dark:bg-slate-900"><tr><th className="px-4 py-3">Title</th><th className="px-4 py-3">Type</th><th className="px-4 py-3">Contractor</th><th className="px-4 py-3">PO</th><th className="px-4 py-3">Invoice</th><th className="px-4 py-3">File</th><th className="px-4 py-3">Rev</th><th className="px-4 py-3">Storage</th><th className="px-4 py-3">Historical</th><th className="px-4 py-3">Actions</th></tr></thead>
+      <tbody className="divide-y dark:divide-slate-800">
+        {rows.map((x:any)=>{ const label=x.document_title||x.file_name; const secureUrl=`/api/documents/${x.id}/file`; const preview=canPreview(x.file_name); return <tr key={x.id}>
+          <td className="px-4 py-4 font-bold">{label}</td><td className="px-4 py-4">{x.document_type}</td><td className="px-4 py-4">{x.vendor_id?vendorMap.get(String(x.vendor_id))||"—":"—"}</td><td className="px-4 py-4">{x.purchase_order_id?poMap.get(String(x.purchase_order_id))||"—":"—"}</td><td className="px-4 py-4">{x.invoice_id?invoiceMap.get(String(x.invoice_id))||"—":"—"}</td>
+          <td className="px-4 py-4"><div className="flex flex-wrap items-center gap-2"><span className="font-semibold">{x.file_name}</span>{x.google_drive_file_id?<>{preview?<a href={secureUrl} target="_blank" rel="noreferrer" className="rounded-lg border border-blue-200 px-2.5 py-1 text-xs font-bold text-blue-700 hover:bg-blue-50">View</a>:null}<a href={`${secureUrl}?download=1`} className="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-bold text-slate-700 hover:bg-slate-50">Download</a></>:<span className="text-xs text-amber-700">File link unavailable</span>}</div></td>
+          <td className="px-4 py-4">{x.revision||"—"}</td><td className="px-4 py-4"><span className={`rounded-full px-2.5 py-1 text-xs font-bold ${x.storage_provider==="google_drive"?"bg-emerald-50 text-emerald-700":"bg-slate-100 text-slate-600"}`}>{x.storage_provider==="google_drive"?"Google Drive":x.storage_provider||"Metadata"}</span></td><td className="px-4 py-4">{x.is_historical?"Yes":"No"}</td><td className="px-4 py-4">{isSuperAdmin?<SuperAdminDelete entity="document" entityId={x.id} entityLabel={label} idField="document_id" action={deleteDocumentRecord}/>:null}</td>
+        </tr>})}
+        {!rows.length?<tr><td colSpan={10} className="px-5 py-12 text-center text-slate-500">No commercial document records yet.</td></tr>:null}
+      </tbody>
+    </table></div></div>
+  </div>;
+}
