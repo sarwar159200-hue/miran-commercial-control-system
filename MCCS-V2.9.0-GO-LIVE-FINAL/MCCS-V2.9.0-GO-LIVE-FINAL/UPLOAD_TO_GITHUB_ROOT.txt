@@ -1,0 +1,11 @@
+MCCS V2.9.0 GO-LIVE
+
+Upload the CONTENTS of this folder to the same GitHub application folder you deploy from.
+
+Vercel Root Directory must be the folder that DIRECTLY contains package.json.
+If you upload this folder as: MCCS-V2.9.0-GO-LIVE-FINAL
+then use exactly:
+MCCS-V2.9.0-GO-LIVE-FINAL
+
+Before deploying, run Supabase migration:
+supabase/migrations/015_super_admin_delete_controls.sql
