@@ -1,1 +1,0 @@
-"use client";import {Printer} from "lucide-react";export function PrintButton(){return <button onClick={()=>window.print()} className="no-print inline-flex items-center gap-2 rounded-xl bg-[#07111f] px-4 py-3 text-sm font-bold text-white dark:bg-blue-600"><Printer className="h-4 w-4"/>Print / Save PDF</button>}
