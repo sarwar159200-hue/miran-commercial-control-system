@@ -1,0 +1,2 @@
+Upload ALL contents of this folder directly to the GitHub repository root.
+In Vercel, leave Root Directory EMPTY.
