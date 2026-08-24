@@ -1,0 +1,18 @@
+MCCS V2.8.1 - REPOSITORY ROOT UPLOAD
+
+IMPORTANT:
+1. Open this extracted folder.
+2. Select ALL CONTENTS INSIDE it (app, components, docs, lib, public, supabase, package.json, etc.).
+3. Upload those items directly into the ROOT of the GitHub repository.
+4. Do NOT upload the MCCS-V2.8.1-REPO-ROOT-READY folder itself.
+
+After upload, GitHub repository root must show package.json next to app/ and components/.
+
+Vercel settings:
+- Framework Preset: Next.js
+- Root Directory: EMPTY
+- Build Command: Default
+- Install Command: Default
+- Output Directory: Default
+
+The package.json at repository root contains Next.js 15.5.21.
