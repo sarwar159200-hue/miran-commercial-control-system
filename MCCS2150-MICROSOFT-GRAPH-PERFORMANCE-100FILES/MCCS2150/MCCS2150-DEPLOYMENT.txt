@@ -1,0 +1,44 @@
+MCCS 2.15.0 — Microsoft Graph Email + Performance Upgrade
+
+PRESERVED
+- Existing MCCS commercial, supplier/package, payment, milestone, VDRL, document, chat, roles and administration features.
+- Existing Supabase and Google Drive integration.
+
+EMAIL CHANGE
+- Removed password-based Outlook SMTP/Nodemailer.
+- Added Microsoft Graph delegated OAuth2 Mail.Send flow.
+- Super Admin connects the Outlook mailbox once from Administration.
+- Refresh token is stored server-side in Supabase table mccs_email_oauth with RLS enabled and no anon/authenticated grants.
+
+RUN IN SUPABASE SQL EDITOR
+supabase/migrations/020_microsoft_graph_email.sql
+
+VERCEL ENVIRONMENT VARIABLES
+MICROSOFT_CLIENT_ID=<Application (client) ID from Microsoft Entra app registration>
+MICROSOFT_CLIENT_SECRET=<Client secret VALUE from Microsoft Entra app registration>
+NEXT_PUBLIC_APP_URL=https://miran-commercial-control-system.vercel.app
+NEXT_PUBLIC_SUPABASE_URL=<existing value>
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<existing value>
+SUPABASE_SERVICE_ROLE_KEY=<existing secret value>
+
+The old OUTLOOK_SMTP_USER and OUTLOOK_SMTP_APP_PASSWORD are no longer used by MCCS 2.15.0.
+
+MICROSOFT APP REGISTRATION
+1. Register an app that supports organizational directories AND personal Microsoft accounts.
+2. Add Web redirect URI:
+   https://miran-commercial-control-system.vercel.app/api/microsoft/callback
+3. Microsoft Graph delegated permissions: Mail.Send and User.Read.
+4. Create a client secret and put its VALUE in MICROSOFT_CLIENT_SECRET.
+5. Deploy, sign in to MCCS as Super Admin, Administration -> Connect Microsoft Outlook.
+6. Sign in as mccs-noreplay@outlook.com and consent.
+7. Test Notify User.
+
+PERFORMANCE
+- Multiple document uploads now run up to 3 files concurrently.
+- Each file continues using safe ordered 4 MB resumable chunks, preserving the existing reliable Google Drive upload behavior.
+- Removed Nodemailer from production dependencies, reducing the server email bundle and avoiding SMTP connection overhead.
+
+ROOT DIRECTORY
+If this folder is uploaded directly under the GitHub repository root as MCCS2150, use:
+MCCS2150
+If GitHub upload creates an extra outer folder, choose the directory that directly contains package.json, app, components, lib, public and supabase.
