@@ -1,0 +1,17 @@
+MCCS 2.16.0 UPGRADE
+
+Preserved all prior MCCS 2.15.1 functionality.
+
+Changes:
+1. Invoice PO selection auto-selects Project / Package; Super Admin can override the invoice package without changing the PO.
+2. Invoice register includes Package.
+3. Payments register includes Invoice Number.
+4. New Android App tab with official Miran Energy SharePoint APK link and short installation instructions.
+5. Voice-call lifecycle hardened: duplicate ringing protection, stale ringing-call expiry, one-shot end-call guard, and call timeout cleanup.
+6. Existing performance indexes and dashboard optimizations retained.
+
+DATABASE STEP:
+Run supabase/migrations/020_microsoft_graph_email.sql once in Supabase SQL Editor.
+The file name is retained only to keep the repository at <=100 files; its content is now the invoice-package migration.
+
+Vercel Root Directory depends on how this folder is uploaded. If this MCCS2160 folder is directly under the repository root, use: MCCS2160
