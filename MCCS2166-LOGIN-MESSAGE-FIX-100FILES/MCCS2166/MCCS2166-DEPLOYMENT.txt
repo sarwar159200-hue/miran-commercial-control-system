@@ -1,5 +1,0 @@
-MCCS 2.16.6 - Login Message Update
-
-- Invalid login now displays: Wrong email or password.
-- No Supabase technical/admin guidance is exposed to end users.
-- All previous MCCS upgrades and login performance improvements are preserved.
