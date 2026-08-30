@@ -1,0 +1,10 @@
+MCCS 2.16.2 - Document Upload Milestone Filter + Performance
+
+Preserved previous MCCS upgrades.
+- Upload button text: Upload files.
+- Payment Milestone list is restricted to the selected PO only.
+- Invoice document uploads use the invoice-linked PO for milestone filtering.
+- Deleted milestones are excluded.
+- Sidebar routes are prefetched during browser idle time for faster tab switching.
+- Existing 4 MB resumable Google Drive chunks and three-file concurrency are retained because they are safe for serverless request limits and data integrity.
+- File count remains exactly 100.
