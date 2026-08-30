@@ -1,8 +1,0 @@
-MCCS 2.16.4 - Commercial Upload Reliability
-- Documents: resumable Google Drive chunks + authenticated service-role metadata registration.
-- New Invoices: attachments no longer travel through Server Actions; browser uploads them resumably after invoice creation.
-- New Purchase Orders: PO PDF, technical offer and supporting files use the same resumable path.
-- Legacy server-side document metadata writes also use the authenticated server service-role insert to avoid RLS orphan errors.
-- 3 MB chunks, transient retries, 2-hour upload token. No MCCS total-file-size cap on these resumable paths.
-- Physical limits still apply: Google Drive quota/storage, browser/device resources, network availability and hosting/runtime constraints.
-- Existing MCCS features and prior upgrades preserved.
