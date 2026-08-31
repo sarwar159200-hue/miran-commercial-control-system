@@ -1,0 +1,9 @@
+MCCS 2.17.5 - Invoice PO / Supplier / Package Dropdown Fix
+
+- Fixed the actual visible New Invoice PO dropdown rendering.
+- Each option now displays: PO Number — Supplier / Contractor — Package Name.
+- Package data was already loaded in parallel; no extra database request was added.
+- Invoice page payload was trimmed slightly by selecting only reviewer fields actually used.
+- Existing automatic supplier, package and milestone behavior is preserved.
+- All previous MCCS upgrades are preserved.
+- Exactly 100 source files.
