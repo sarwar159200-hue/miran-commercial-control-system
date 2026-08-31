@@ -1,0 +1,6 @@
+MCCS 2.16.9 - Dashboard Milestone Summary Drill-down
+
+- Clickable Overdue, Due This Week, Due This Month, Next 3 Months and All Outstanding KPI summaries.
+- Detailed list includes PO, supplier, package, milestone, percentage, payment due date, overdue days, outstanding amount and status.
+- Reuses already-loaded dashboard milestone data for fast response; no extra database query or migration.
+- Previous MCCS upgrades preserved.
