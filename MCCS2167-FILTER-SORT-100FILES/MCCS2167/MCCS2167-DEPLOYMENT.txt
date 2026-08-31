@@ -1,8 +1,0 @@
-MCCS 2.16.7 - Milestone, Invoice & Payment Filtering/Sorting
-
-- Payment Milestones: package dropdown added; selecting a package filters summaries, bulk editor and table. Supplier filter retained.
-- Milestone table columns are sortable ascending/descending by clicking the column heading.
-- Invoices: Package and Vendor/Supplier dropdown filters added; all business columns sortable.
-- Payments: Package and Vendor/Supplier dropdown filters added; all business columns sortable.
-- Existing roles, permissions, document uploads, large-file resumable upload, invoice workflow, payments, Android App, chat/calls and prior performance/login upgrades preserved.
-- No database migration required.
