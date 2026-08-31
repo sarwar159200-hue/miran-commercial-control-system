@@ -1,8 +1,0 @@
-MCCS 2.17.2 - Google Drive Authorization Recovery
-
-- Detects revoked/expired Google refresh tokens (invalid_grant).
-- Clears the dead token so MCCS stops retrying it repeatedly.
-- Shows a clear reconnect instruction instead of raw Google OAuth errors.
-- PO, Invoice and Documents upload flows all use the same friendly recovery message.
-- Upload logic, resumable large-file support and previous MCCS upgrades are preserved.
-- A Super Admin must reconnect Google Drive once after Google revokes/expires authorization.
