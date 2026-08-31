@@ -1,7 +1,0 @@
-MCCS 2.17.4 - Invoice PO Dropdown Package Label
-
-- New Invoice PO dropdown now displays PO Number — Supplier / Contractor — Package Name.
-- Existing automatic supplier, package and milestone behavior is preserved.
-- No new database migration.
-- Previous MCCS upgrades are preserved.
-- Exactly 100 source files.
