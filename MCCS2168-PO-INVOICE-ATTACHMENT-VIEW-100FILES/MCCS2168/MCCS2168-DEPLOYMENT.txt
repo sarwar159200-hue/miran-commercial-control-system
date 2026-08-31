@@ -1,0 +1,8 @@
+MCCS 2.16.8 - PO & Invoice Attachment Visibility
+- Purchase Order register shows View PO when a linked PO file exists.
+- Purchase Order detail page shows all linked PO/doc attachments with View / Download.
+- Invoice register shows View Invoice when a linked invoice file exists.
+- Invoice detail page shows all linked invoice attachments with View / Download.
+- Reuses the existing secured /api/documents/[id]/file route and existing Google Drive repository.
+- No database migration required.
+- All previous MCCS upgrades preserved.
