@@ -1,0 +1,8 @@
+MCCS 2.17.6 - Paid / Overdue Dashboard Logic Fix
+
+- Milestones with Status = Paid are excluded from Overdue.
+- Paid milestones are also excluded from All Outstanding, Due This Week, Due This Month and Next 3 Months because those KPI lists are built from the same outstanding population.
+- Status editing from the dashboard therefore immediately drives the summary KPIs and drill-down lists.
+- Existing payment records, Actual Payment Date, milestone filters and previous MCCS upgrades are preserved.
+- No database migration required.
+- Exactly 100 source files.
