@@ -1,9 +1,0 @@
-MCCS 2.17.1 - Dashboard Milestone Payment Control
-
-- Super Admin and Accounts Payable can update milestone status directly from the dashboard drill-down.
-- Status writes to the central payment_milestones record, so other MCCS views read the same status.
-- Added optional Actual Payment Date field, editable by Super Admin and Accounts Payable.
-- Existing milestone drill-down, payment calculations, filters, uploads, chat, permissions and previous MCCS upgrades preserved.
-- Run the appended MCCS 2.17.1 SQL in supabase/migrations/021_performance_indexes.sql before deployment.
-
-- MCCS 2.17.1: Dashboard milestone drill-down table header filters added for every data column.
