@@ -1,9 +1,0 @@
-MCCS 2.17.7 - Windows Program Download Section
-
-- Added MCCS Windows Program below the existing Android installation section.
-- Added official 64-bit (x64) and 32-bit (x86) SharePoint download buttons.
-- Added Windows installation instructions including SmartScreen More info / Run anyway guidance.
-- Added note that the Windows program connects to the live MCCS website so normal website deployments are reflected automatically.
-- No database queries, API calls, migrations, authentication logic, dashboard calculations, upload logic, or previous commercial-control functionality were changed.
-- This page remains static apart from normal link clicks, so the upgrade adds no recurring website performance load.
-- Previous MCCS 2.17.6 functionality is preserved.
