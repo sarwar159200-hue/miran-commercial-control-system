@@ -1,0 +1,7 @@
+MCCS 2.18.1 - PO Value on Payment Milestones
+
+- Added PO Value to each PO/package summary card in the Payment Milestones tab.
+- PO Value uses the purchase order current_value and existing currency already loaded by the page.
+- No new database query, API call, polling, dependency, migration, or background request was added.
+- Website performance characteristics remain unchanged from MCCS 2.18.0.
+- All previous MCCS upgrades are preserved.
