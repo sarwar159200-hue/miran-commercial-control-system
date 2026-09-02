@@ -1,0 +1,7 @@
+"use client";
+import { useRouter, useSearchParams } from "next/navigation";
+export default function MilestoneVendorFilter({vendors,packages,selectedVendorId,selectedPackageId}:{vendors:{id:string;vendor_name:string}[];packages:{id:string;name:string}[];selectedVendorId?:string;selectedPackageId?:string}){
+ const router=useRouter(),searchParams=useSearchParams();
+ function change(key:"vendor"|"package",value:string){const p=new URLSearchParams(searchParams.toString());if(value)p.set(key,value);else p.delete(key);router.push(`/payment-milestones${p.toString()?`?${p}`:""}`)}
+ return <div className="grid min-w-[640px] gap-3 sm:grid-cols-2"><label><span className="mb-2 block text-xs font-extrabold uppercase tracking-[0.18em] text-slate-500">Package</span><select className="input bg-white font-semibold" value={selectedPackageId||""} onChange={e=>change("package",e.target.value)}><option value="">All packages</option>{packages.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select></label><label><span className="mb-2 block text-xs font-extrabold uppercase tracking-[0.18em] text-slate-500">Supplier / Contractor</span><select className="input bg-white font-semibold" value={selectedVendorId||""} onChange={e=>change("vendor",e.target.value)}><option value="">All suppliers / contractors</option>{vendors.map(v=><option key={v.id} value={v.id}>{v.vendor_name}</option>)}</select></label></div>
+}
