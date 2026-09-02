@@ -1,0 +1,20 @@
+MCCS 2.18.0 - PO Milestone Persistence Verification Fix
+
+Issue fixed:
+- PO Edit could show "PO and payment milestones saved successfully" even when newly-added payment milestone rows did not remain persisted after navigating away and returning.
+
+Changes:
+- New milestone inserts now explicitly set active/non-deleted state.
+- New rows are inserted using the already-authorized server service-role client.
+- The action verifies the inserted row count.
+- A final database read-back verifies that every submitted milestone name actually exists for the PO before success is shown.
+- If persistence fails, the page shows a real error instead of a false success message.
+- PO Edit reloads active milestones by purchase_order_id and sequence order.
+
+Performance:
+- No new page-load polling or background requests.
+- Existing milestone updates still run in parallel.
+- New milestones still use a single batch insert.
+- Only one small verification read occurs when the user presses Save, not during normal browsing.
+
+All prior MCCS 2.17.9 upgrades are preserved.
