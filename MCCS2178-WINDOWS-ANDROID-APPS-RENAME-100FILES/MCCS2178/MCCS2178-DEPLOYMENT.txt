@@ -1,7 +1,0 @@
-MCCS 2.17.8 - Windows & Android Apps Rename
-
-- Renamed the sidebar navigation item from "Android App" to "Windows & Android Apps".
-- No application logic, database query, API call, authentication, dashboard calculation, file upload, Google Drive, VDRL, PO, invoice, payment, milestone, messaging, or permission behavior was changed.
-- No new component, dependency, background request, or database request was added.
-- Website performance characteristics are unchanged from MCCS 2.17.7.
-- All previous upgrades are preserved.
